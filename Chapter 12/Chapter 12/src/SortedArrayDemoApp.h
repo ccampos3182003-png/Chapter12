@@ -1,6 +1,6 @@
 #pragma once
 #include "SubApp.h"
-#include <set>
+#include <vector>
 #include <string>
 
 class SortedArrayDemoApp : public SubApp
@@ -25,6 +25,6 @@ private:
 	void HandleInput(char p_Input) override;
 
 private:
-	std::multiset<std::string> m_List;
+	std::vector<std::string> m_List;
 };
 

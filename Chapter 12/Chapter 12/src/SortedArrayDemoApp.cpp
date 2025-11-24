@@ -1,5 +1,6 @@
 #include "SortedArrayDemoApp.h"
 #include "Input.h"
+#include <algorithm>
 
 SortedArrayDemoApp::SortedArrayDemoApp()
 	: SubApp(EAppID::SortedArrayDemoApp)
@@ -12,7 +13,7 @@ void SortedArrayDemoApp::Run()
 	while (this->GetState() != ESubAppState::Exited)
 	{
 		std::system("cls");
-		puts("\n\t2 > Searching unsorted dynamic arrays");
+		puts("\n\t2 > Searching sorted dynamic arrays");
 		puts(std::string(100, char(205)).c_str());
 		puts("\tA > Create new array");
 		puts("\tB > Add an element to the dynamic array");
@@ -44,7 +45,9 @@ void SortedArrayDemoApp::HandleInput(char p_Input)
 		m_List.clear();
 		size_t size = Input::inputInteger("\n\tInput size of dynamic array: ", true);
 		for (size_t i = 0; i < size; i++)
-			m_List.insert("str#" + std::to_string(i));
+			m_List.push_back("str#" + std::to_string(i));
+
+		std::sort(m_List.begin(), m_List.end());
 
 		puts("\n\tRandom elements have been populated into the array.");
 	}
@@ -52,7 +55,8 @@ void SortedArrayDemoApp::HandleInput(char p_Input)
 	case 'B':
 	{
 		std::string str = Input::inputString("\n\tInput new element: ", true);
-		m_List.insert(str);
+		m_List.push_back(str);
+		std::sort(m_List.begin(), m_List.end());
 
 		printf("\n\t\"%s\" was successfully inserted into the array!", str.c_str());
 	}
@@ -96,7 +100,6 @@ void SortedArrayDemoApp::HandleInput(char p_Input)
 				printf("\"%s\" is not found in the sorted array!", str.c_str());
 				break;
 			}
-			--iter;
 
 			size_t index = std::distance(m_List.begin(), iter);
 			printf("\n\t\"%s\" is found in the sorted array at index [%d]!", str.c_str(), index);
